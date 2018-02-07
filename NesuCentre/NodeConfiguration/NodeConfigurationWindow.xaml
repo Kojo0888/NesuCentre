@@ -1,0 +1,47 @@
+﻿<Window x:Class="NesuCentre.NodeConfigurationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:OptionAlias="clr-namespace:NesuCentre.NodeConfiguration.Structure"
+        xmlns:local="clr-namespace:NesuCentre"
+        mc:Ignorable="d"
+        Title="Node configuration" Height="300" Width="300"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="OptionAlias:AdditionalOption"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Left"  Content="Add new node" Margin="9 4" Padding="10 2" Click="NewNode_Click"/>
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Content="&gt;" Margin="9 4" Padding="10 2" Click="Back_Click"/>
+            </DockPanel>
+            <Separator DockPanel.Dock="Top" Margin="9 2"/>
+            <TextBlock Name="C_Path" DockPanel.Dock="Top" Margin="9 2"/>
+            <Separator DockPanel.Dock="Top" Margin="9 2"/>
+            <GroupBox Header="Node details" DockPanel.Dock="Bottom" Margin="6">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Left" Margin="4">
+                        <TextBlock Text="Name:  " Margin="3"/>
+                        <TextBlock Text="Path:  " Margin="3"/>
+                        <TextBlock Text="Option:  " Margin="3"/>
+                    </StackPanel>
+                    <StackPanel Margin="4">
+                        <TextBox Name="C_NodeName_TBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" Text="{Binding Details.Name,UpdateSourceTrigger=PropertyChanged}" TextChanged="C_NodeName_TBX_TextChanged"/>
+                        <TextBox Name="C_NodePath_TBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" Text="{Binding Details.Path}"/>
+                        <ComboBox Name="C_NodeOption_CBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" SelectedItem="{Binding Details.Option}" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" />
+                    </StackPanel>
+                </DockPanel>
+            </GroupBox>
+            <ListView Name="C_NodeList" DockPanel.Dock="Bottom" Margin="9" MouseDoubleClick="C_NodeList_MouseDoubleClick" 
+                      KeyDown="C_NodeList_KeyDown" SelectionChanged="C_NodeList_SelectionChanged" AllowDrop="True" Drop="C_NodeList_Drop"/>
+        </DockPanel>
+    </Grid>
+</Window>
