@@ -372,9 +372,9 @@ namespace NesuCentre
 
         public void ExecuteNodeBase()
         {
-            if(this.nodeConfig.Details.Configuration is NodeConfiguration.Structure.NodeConfigurationNewestOldestFileOrDirectory)
+            if(this.nodeConfig.Details.Setting is NodeConfiguration.Structure.NodeSettingNewestOldestFileOrDirectory)
             {
-                var config = this.nodeConfig.Details.Configuration as NodeConfiguration.Structure.NodeConfigurationNewestOldestFileOrDirectory;
+                var config = this.nodeConfig.Details.Setting as NodeConfiguration.Structure.NodeSettingNewestOldestFileOrDirectory;
                 RunNewestOldestPath(config.Files, config.Directories, config.DateType);
             }
             else

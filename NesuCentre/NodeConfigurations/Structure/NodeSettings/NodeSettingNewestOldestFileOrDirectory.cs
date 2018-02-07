@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NesuCentre.NodeConfiguration.Structure
 {
-    public class NodeConfigurationNewestOldestFileOrDirectory : INodeConfiguration
+    public class NodeSettingNewestOldestFileOrDirectory : INodeSetting
     {
         public bool Newest { get; set; }
 

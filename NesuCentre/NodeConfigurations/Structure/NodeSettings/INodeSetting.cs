@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace NesuCentre.NodeConfiguration.Structure
 {
-    public class NodeDetails
+    public interface INodeSetting
     {
-        public string Name { get; set; }
-
-        public string Path { get; set; }
-
-        public INodeConfiguration Configuration { get; set; }
     }
 }

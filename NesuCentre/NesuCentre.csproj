@@ -58,15 +58,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NodeConfiguration\NodeConfigurationWindow.xaml">
+    <Page Include="NodeConfigurations\NodeConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SubNode.xaml">
+    <Page Include="Nodes\NodeControls\SubNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainNode.xaml">
+    <Page Include="Nodes\NodeControls\MainNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -77,22 +77,22 @@
     <Compile Include="MainContainerWindow.xaml.cs">
       <DependentUpon>MainContainerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="INode.cs" />
-    <Compile Include="NodeConfiguration\Structure\AdditionalOption.cs" />
-    <Compile Include="NodeConfiguration\Structure\ConfigurationCentre.cs" />
-    <Compile Include="NodeConfiguration\Structure\INodeConfiguration.cs" />
-    <Compile Include="NodeConfiguration\Structure\NodeConfigurationNewestOldestFileOrDirectory.cs" />
-    <Compile Include="NodeConfiguration\Structure\NodeStructure.cs" />
-    <Compile Include="NodeConfiguration\NodeConfigurationWindow.xaml.cs">
+    <Compile Include="Nodes\INode.cs" />
+    <Compile Include="NodeConfigurations\Structure\AdditionalOption.cs" />
+    <Compile Include="NodeConfigurations\Structure\ConfigurationCentre.cs" />
+    <Compile Include="NodeConfigurations\Structure\NodeSettings\INodeSetting.cs" />
+    <Compile Include="NodeConfigurations\Structure\NodeSettings\NodeSettingNewestOldestFileOrDirectory.cs" />
+    <Compile Include="NodeConfigurations\Structure\NodeStructure.cs" />
+    <Compile Include="NodeConfigurations\NodeConfigurationWindow.xaml.cs">
       <DependentUpon>NodeConfigurationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NodeConfiguration\Structure\NodeDetails.cs" />
-    <Compile Include="NodeConfiguration\Structure\PathDate.cs" />
-    <Compile Include="SubNodeBase.cs" />
-    <Compile Include="SubNode.xaml.cs">
+    <Compile Include="NodeConfigurations\Structure\NodeDetails.cs" />
+    <Compile Include="NodeConfigurations\Structure\NodeSettings\PathDate.cs" />
+    <Compile Include="Nodes\SubNodeBase.cs" />
+    <Compile Include="Nodes\NodeControls\SubNode.xaml.cs">
       <DependentUpon>SubNode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainNode.xaml.cs">
+    <Compile Include="Nodes\NodeControls\MainNode.xaml.cs">
       <DependentUpon>MainNode.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
