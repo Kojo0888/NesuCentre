@@ -80,7 +80,7 @@
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="NodeConfigurations\Structure\AdditionalOption.cs" />
     <Compile Include="NodeConfigurations\Structure\ConfigurationCentre.cs" />
-    <Compile Include="NodeConfigurations\Structure\NodeSettings\INodeSetting.cs" />
+    <Compile Include="NodeConfigurations\Structure\NodeSettings\NodeSettingBase.cs" />
     <Compile Include="NodeConfigurations\Structure\NodeSettings\NodeSettingNewestOldestFileOrDirectory.cs" />
     <Compile Include="NodeConfigurations\Structure\NodeStructure.cs" />
     <Compile Include="NodeConfigurations\NodeConfigurationWindow.xaml.cs">

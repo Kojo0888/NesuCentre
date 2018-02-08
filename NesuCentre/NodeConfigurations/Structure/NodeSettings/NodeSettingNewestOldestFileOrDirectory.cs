@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NesuCentre.NodeConfiguration.Structure
 {
-    public class NodeSettingNewestOldestFileOrDirectory : INodeSetting
+    public class NodeSettingNewestOldestFileOrDirectory : NodeSettingBase
     {
         public bool Newest { get; set; }
 
@@ -15,5 +15,13 @@ namespace NesuCentre.NodeConfiguration.Structure
         public bool Directories { get; set; }
 
         public PathDate DateType { get; set; }
+
+        public NodeSettingNewestOldestFileOrDirectory()
+        {
+            Newest = true;
+            Files = false;
+            Directories = false;
+            DateType = PathDate.CreationTime;
+        }
     }
 }

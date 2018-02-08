@@ -387,7 +387,7 @@ namespace NesuCentre
         {
             if (Directory.Exists(this.nodeConfig.Details.Path))
             {
-                DateTime newestDateTime = new DateTime(0, 0, 0);
+                DateTime newestDateTime = new DateTime();
                 string newestPath = string.Empty;
                 List<string> paths = new List<string>();
 

@@ -27,6 +27,8 @@ namespace NesuCentre
 
         public List<NodeStructure> PathNodes = new List<NodeStructure>();
 
+        public bool SettingUpControls { set; get; }
+
         public NodeConfigurationWindow()
         {
             InitializeComponent();
@@ -130,6 +132,132 @@ namespace NesuCentre
             CurrentNode.Nodes.Add(new NodeStructure() { Details = new NodeDetails() { Name = filename, Path = filepath} });
             C_NodeList.ItemsSource = CurrentNode.Nodes;
             RefreshListView();
+        }
+
+        private void C_NodeSetting_NewestOldestFileOrDirectory_SP_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var node = C_NodeSetting_NewestOldestFileOrDirectory_SP.DataContext as NodeStructure;
+            if(node == null) return;
+
+            if (node.Details.Setting is NodeSettingNewestOldestFileOrDirectory)
+            {
+                C_NodeSetting_Type_CBX.SelectedItem = AdditionalOption.NewestOldestFileOrDirectory;
+                SetNewestOldestFileOrDirectorySettingControls(node.Details.Setting as NodeSettingNewestOldestFileOrDirectory);
+            }
+            else
+            {
+                C_NodeSetting_Type_CBX.SelectedItem = AdditionalOption.None;
+                SetNoneSettingControls();
+            }
+        }
+
+        private void SetNewestOldestFileOrDirectorySettingControls(NodeSettingNewestOldestFileOrDirectory setting)
+        {
+            C_NodeSetting_NewestOldestFileOrDirectory_SP.Visibility = Visibility.Visible;
+
+            if (setting == null)
+                return;
+
+            SettingUpControls = true;
+
+            C_NodeSettings_Directories_CHBX.IsChecked = setting.Directories;
+            C_NodeSettings_Files_CHBX.IsChecked = setting.Files;
+            C_NodeSettings_NewestDate_RBX.IsChecked = setting.Newest;
+            C_NodeSettings_OldestDate_RBX.IsChecked = !setting.Newest;
+
+            C_NodeSettings_LastAccessDate_RBTN.IsChecked = setting.DateType == PathDate.LastAccessTime;
+            C_NodeSettings_LastWriteDate_RBTN.IsChecked = setting.DateType == PathDate.LastWriteTime;
+            C_NodeSettings_CreationDate_RBTN.IsChecked = setting.DateType == PathDate.CreationTime;
+
+            SettingUpControls = false;
+        }
+
+        private void SetNoneSettingControls()
+        {
+            C_NodeSetting_NewestOldestFileOrDirectory_SP.Visibility = Visibility.Collapsed;
+
+            SettingUpControls = true;
+
+            C_NodeSettings_Directories_CHBX.IsChecked = false;
+            C_NodeSettings_Files_CHBX.IsChecked = false;
+            C_NodeSettings_NewestDate_RBX.IsChecked = false;
+            C_NodeSettings_OldestDate_RBX.IsChecked = false;
+
+            C_NodeSettings_LastAccessDate_RBTN.IsChecked = false;
+            C_NodeSettings_LastWriteDate_RBTN.IsChecked = false;
+            C_NodeSettings_CreationDate_RBTN.IsChecked = false;
+
+            SettingUpControls = false;
+        }
+
+        private void C_NodeSettings_LastWriteDate_RBTN_Checked(object sender, RoutedEventArgs e)
+        {
+            var node = C_NodeSetting_NewestOldestFileOrDirectory_SP.DataContext as NodeStructure;
+            if (node == null) return;
+
+            var settingNewerOlder = node.Details.Setting as NodeSettingNewestOldestFileOrDirectory;
+            if (settingNewerOlder == null) return;
+
+            if (!SettingUpControls)
+            {
+                if (C_NodeSettings_LastAccessDate_RBTN.IsChecked == true)
+                    settingNewerOlder.DateType = PathDate.LastAccessTime;
+                else if (C_NodeSettings_LastWriteDate_RBTN.IsChecked == true)
+                    settingNewerOlder.DateType = PathDate.LastWriteTime;
+                else if (C_NodeSettings_CreationDate_RBTN.IsChecked == true)
+                    settingNewerOlder.DateType = PathDate.CreationTime;
+            }
+        }
+
+        private void C_NodeSettings_NewestDate_RBX_Checked(object sender, RoutedEventArgs e)
+        {
+            var node = C_NodeSetting_NewestOldestFileOrDirectory_SP.DataContext as NodeStructure;
+            if (node == null) return;
+
+            var settingNewerOlder = node.Details.Setting as NodeSettingNewestOldestFileOrDirectory;
+            if (settingNewerOlder == null) return;
+
+            if (!SettingUpControls)
+            {
+                if (C_NodeSettings_OldestDate_RBX.IsChecked == true)
+                    settingNewerOlder.Newest = false;
+                else if (C_NodeSettings_NewestDate_RBX.IsChecked == true)
+                    settingNewerOlder.Newest = true;
+            }
+        }
+
+        private void C_NodeSetting_Type_CBX_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var node = C_NodeSetting_NewestOldestFileOrDirectory_SP.DataContext as NodeStructure;
+            if (node == null) return;
+
+            var selected = C_NodeSetting_Type_CBX.SelectedItem.ToString();
+            if (selected == AdditionalOption.NewestOldestFileOrDirectory.ToString())
+            {
+                if(node.Details.Setting == null || !(node.Details.Setting is NodeSettingNewestOldestFileOrDirectory))
+                    node.Details.Setting = new NodeSettingNewestOldestFileOrDirectory();
+                SetNewestOldestFileOrDirectorySettingControls(node.Details.Setting as NodeSettingNewestOldestFileOrDirectory);
+            }
+            else
+            {
+                node.Details.Setting = null;
+                SetNoneSettingControls();
+            }
+        }
+
+        private void C_NodeSettings_Files_CHBX_Checked(object sender, RoutedEventArgs e)
+        {
+            var node = C_NodeSetting_NewestOldestFileOrDirectory_SP.DataContext as NodeStructure;
+            if (node == null) return;
+
+            var settingNewerOlder = node.Details.Setting as NodeSettingNewestOldestFileOrDirectory;
+            if (settingNewerOlder == null) return;
+
+            if (!SettingUpControls)
+            {
+                settingNewerOlder.Files = C_NodeSettings_Files_CHBX.IsChecked == true ? true : false;
+                settingNewerOlder.Directories = C_NodeSettings_Directories_CHBX.IsChecked == true ? true : false;
+            }
         }
     }
 }

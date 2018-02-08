@@ -12,7 +12,7 @@ namespace NesuCentre.NodeConfiguration.Structure
 
         public string Path { get; set; }
 
-        public INodeSetting Setting { get; set; }
+        public NodeSettingBase Setting { get; set; }
 
         public AdditionalOption Option { get; set; }
     }

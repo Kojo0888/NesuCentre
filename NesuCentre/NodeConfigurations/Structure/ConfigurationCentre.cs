@@ -28,7 +28,7 @@ namespace NesuCentre.NodeConfiguration.Structure
             if (File.Exists(NODE_CONFIGURATION_FILE_NAME))
                 File.Move(NODE_CONFIGURATION_FILE_NAME, NODE_CONFIGURATION_BACKUP_FILE_NAME);
 
-                    XmlSerializer xmlSerializer = new XmlSerializer(RootNode.GetType());
+            XmlSerializer xmlSerializer = new XmlSerializer(RootNode.GetType());
             using (TextWriter textWriter = new StreamWriter(NODE_CONFIGURATION_FILE_NAME))
             {
                 xmlSerializer.Serialize(textWriter, RootNode);

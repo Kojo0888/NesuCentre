@@ -7,6 +7,7 @@
         xmlns:OptionAlias="clr-namespace:NesuCentre.NodeConfiguration.Structure"
         xmlns:local="clr-namespace:NesuCentre"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
         Title="Node configuration" Height="300" Width="300"
         Closing="Window_Closing">
     <Window.Resources>
@@ -28,19 +29,40 @@
             <Separator DockPanel.Dock="Top" Margin="9 2"/>
             <GroupBox Header="Node details" DockPanel.Dock="Bottom" Margin="6">
                 <DockPanel>
+                    <Expander DockPanel.Dock="Bottom" Header="Node Settings" IsExpanded="True">
+                        <Grid>
+                            <StackPanel>
+                                <ComboBox Name="C_NodeSetting_Type_CBX" Margin="5" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectionChanged="C_NodeSetting_Type_CBX_SelectionChanged"/>
+                                <StackPanel Name="C_NodeSetting_NewestOldestFileOrDirectory_SP" Margin="5" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" DataContextChanged="C_NodeSetting_NewestOldestFileOrDirectory_SP_DataContextChanged">
+                                    <DockPanel DataContext="{Binding Details.Setting}">
+                                        <StackPanel HorizontalAlignment="Left">
+                                            <CheckBox Name="C_NodeSettings_Files_CHBX" Content="Files" Margin="4" Checked="C_NodeSettings_Files_CHBX_Checked"/>
+                                            <CheckBox Name="C_NodeSettings_Directories_CHBX" Content="Directories" Margin="4" Checked="C_NodeSettings_Files_CHBX_Checked"/>
+                                            <Separator/>
+                                            <RadioButton Name="C_NodeSettings_NewestDate_RBX" Content="Newest Date" Margin="4" Checked="C_NodeSettings_NewestDate_RBX_Checked"/>
+                                            <RadioButton Name="C_NodeSettings_OldestDate_RBX" Content="Oldest Date" Margin="4" Checked="C_NodeSettings_NewestDate_RBX_Checked"/>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Right">
+                                            <RadioButton Name="C_NodeSettings_LastWriteDate_RBTN" Content="Last Write Date" Margin="4" Checked="C_NodeSettings_LastWriteDate_RBTN_Checked"/>
+                                            <RadioButton Name="C_NodeSettings_LastAccessDate_RBTN" Content="Last Access Date" Margin="4" Checked="C_NodeSettings_LastWriteDate_RBTN_Checked"/>
+                                            <RadioButton Name="C_NodeSettings_CreationDate_RBTN" Content="Creation Date" Margin="4" Checked="C_NodeSettings_LastWriteDate_RBTN_Checked"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Expander>
                     <StackPanel DockPanel.Dock="Left" Margin="4">
                         <TextBlock Text="Name:  " Margin="3"/>
                         <TextBlock Text="Path:  " Margin="3"/>
-                        <TextBlock Text="Option:  " Margin="3"/>
                     </StackPanel>
                     <StackPanel Margin="4">
                         <TextBox Name="C_NodeName_TBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" Text="{Binding Details.Name,UpdateSourceTrigger=PropertyChanged}" TextChanged="C_NodeName_TBX_TextChanged"/>
                         <TextBox Name="C_NodePath_TBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" Text="{Binding Details.Path}"/>
-                        <ComboBox Name="C_NodeOption_CBX" Margin="2" DataContext="{Binding ElementName=C_NodeList, Path=SelectedItem}" SelectedItem="{Binding Details.Option}" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" />
                     </StackPanel>
                 </DockPanel>
             </GroupBox>
-            <ListView Name="C_NodeList" DockPanel.Dock="Bottom" Margin="9" MouseDoubleClick="C_NodeList_MouseDoubleClick" 
+            <ListView Name="C_NodeList" DockPanel.Dock="Bottom" Margin="9" MouseDoubleClick="C_NodeList_MouseDoubleClick" MinHeight="80"
                       KeyDown="C_NodeList_KeyDown" SelectionChanged="C_NodeList_SelectionChanged" AllowDrop="True" Drop="C_NodeList_Drop"/>
         </DockPanel>
     </Grid>
