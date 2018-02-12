@@ -11,7 +11,7 @@ namespace NesuCentre.NodeConfiguration.Structure
     public static class ConfigurationCentre
     {
         public static string NODE_CONFIGURATION_FILE_NAME = "NodeConfiguration.config";
-        public static string NODE_CONFIGURATION_BACKUP_FILE_NAME = "NodeConfiguration_backup.config";
+        public static string NODE_CONFIGURATION_BACKUP_FOLDER_NAME = "NodeConfigurationBackups";
 
         public static NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root"} };
 
@@ -22,16 +22,37 @@ namespace NesuCentre.NodeConfiguration.Structure
 
         public static void SaveConfiguration()
         {
-            if (File.Exists(NODE_CONFIGURATION_BACKUP_FILE_NAME))
-                File.Delete(NODE_CONFIGURATION_BACKUP_FILE_NAME);
-
-            if (File.Exists(NODE_CONFIGURATION_FILE_NAME))
-                File.Move(NODE_CONFIGURATION_FILE_NAME, NODE_CONFIGURATION_BACKUP_FILE_NAME);
+            MoveConfigurationToBackupFolder();
 
             XmlSerializer xmlSerializer = new XmlSerializer(RootNode.GetType());
             using (TextWriter textWriter = new StreamWriter(NODE_CONFIGURATION_FILE_NAME))
             {
                 xmlSerializer.Serialize(textWriter, RootNode);
+            }
+        }
+
+        private static void MoveConfigurationToBackupFolder()
+        {
+            if (!Directory.Exists(NODE_CONFIGURATION_BACKUP_FOLDER_NAME))
+                Directory.CreateDirectory(NODE_CONFIGURATION_BACKUP_FOLDER_NAME);
+
+            if (File.Exists(NODE_CONFIGURATION_FILE_NAME))
+            {
+                DateTime dt = File.GetLastWriteTime(NODE_CONFIGURATION_FILE_NAME);
+                string newPath = Path.Combine(NODE_CONFIGURATION_BACKUP_FOLDER_NAME,
+                    $"ConfigurationBackup_{dt.ToShortDateString().Replace('/','_')}__{dt.ToLongTimeString().Replace(':','_').Replace(' ','_')}.config");
+                File.Move(NODE_CONFIGURATION_FILE_NAME, newPath);
+            }
+
+            ScanAndRemoveBackupsOlderThanWeek();
+        }
+
+        private static void ScanAndRemoveBackupsOlderThanWeek()
+        {
+            foreach (var path in Directory.GetFiles(NODE_CONFIGURATION_BACKUP_FOLDER_NAME))
+            {
+                if (File.GetLastAccessTime(NODE_CONFIGURATION_BACKUP_FOLDER_NAME).AddDays(7) < DateTime.Now)
+                    File.Delete(path);
             }
         }
 

@@ -62,8 +62,27 @@
                     </StackPanel>
                 </DockPanel>
             </GroupBox>
-            <ListView Name="C_NodeList" DockPanel.Dock="Bottom" Margin="9" MouseDoubleClick="C_NodeList_MouseDoubleClick" MinHeight="80"
-                      KeyDown="C_NodeList_KeyDown" SelectionChanged="C_NodeList_SelectionChanged" AllowDrop="True" Drop="C_NodeList_Drop"/>
+            <DockPanel DockPanel.Dock="Bottom" >
+                <DockPanel DockPanel.Dock="Right" Margin="6 6 12 6">
+                    <Button Name="C_NodeList_MoveUp_BTN" DockPanel.Dock="Top" Content="^" 
+                            ToolTip="Move node Higher on list" Click="C_NodeList_MoveUp_BTN_Click"/>
+                    <Button Name="C_NodeList_MoveDown_BTN" DockPanel.Dock="Bottom" Content="v" 
+                            VerticalAlignment="Bottom" ToolTip="Move node Lower on list" Click="C_NodeList_MoveDown_BTN_Click"/>
+                </DockPanel>
+                <ListView Name="C_NodeList" Margin="9" MouseDoubleClick="C_NodeList_MouseDoubleClick" MinHeight="100" MinWidth="150"
+                          KeyDown="C_NodeList_KeyDown" SelectionChanged="C_NodeList_SelectionChanged" AllowDrop="True" Drop="C_NodeList_Drop">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Name="C_NodeList_ItemDataTemplate_G" AllowDrop="True" Drop="C_NodeList_ItemDataTemplate_G_Drop"
+                                  PreviewMouseLeftButtonDown="C_NodeList_ItemDataTemplate_G_PreviewMouseLeftButtonDown"
+                                  MouseMove="C_NodeList_ItemDataTemplate_G_MouseMove" DataContext="{Binding}"
+                                  MouseRightButtonUp="C_NodeList_ItemDataTemplate_G_MouseRightButtonUp">
+                                <TextBlock Text="{Binding Details.Name}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
         </DockPanel>
     </Grid>
 </Window>

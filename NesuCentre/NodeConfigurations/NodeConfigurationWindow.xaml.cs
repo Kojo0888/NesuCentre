@@ -29,6 +29,8 @@ namespace NesuCentre
 
         public bool SettingUpControls { set; get; }
 
+        public int DragDropState { get; set; }
+
         public NodeConfigurationWindow()
         {
             InitializeComponent();
@@ -126,12 +128,17 @@ namespace NesuCentre
 
         private void C_NodeList_Drop(object sender, DragEventArgs e)
         {
-            string filepath = (e.Data.GetData(DataFormats.FileDrop) as String[])[0];
+            var paths = (e.Data.GetData(DataFormats.FileDrop) as String[]);
+            if (paths == null || paths.Length == 0)
+                return;
+
+            string filepath = paths[0];
             string filename = System.IO.Path.GetFileName(filepath);
 
             CurrentNode.Nodes.Add(new NodeStructure() { Details = new NodeDetails() { Name = filename, Path = filepath} });
             C_NodeList.ItemsSource = CurrentNode.Nodes;
             RefreshListView();
+
         }
 
         private void C_NodeSetting_NewestOldestFileOrDirectory_SP_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -258,6 +265,103 @@ namespace NesuCentre
                 settingNewerOlder.Files = C_NodeSettings_Files_CHBX.IsChecked == true ? true : false;
                 settingNewerOlder.Directories = C_NodeSettings_Directories_CHBX.IsChecked == true ? true : false;
             }
+        }
+
+        private void C_NodeList_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (DragDropState > 0)
+                DragDropState = 0;
+             
+        }
+
+        private void C_NodeList_ItemDataTemplate_G_Drop(object sender, DragEventArgs e)
+        {
+            if(DragDropState > 5)
+            {
+                DragDropState = 0;
+                var data = e.Data.GetData(typeof(NodeStructure)) as NodeStructure;
+                if(data != null)
+                {
+                    var reciver = sender as Grid;
+                    if (reciver == null)
+                        return;
+                    var reciverNode = reciver.DataContext as NodeStructure;
+                    if (reciverNode == null)
+                        return;
+                    if (data == reciverNode)
+                        return;
+                    CurrentNode.Nodes.Remove(data);
+                    reciverNode.Nodes.Add(data);
+                    RefreshListView();
+                }
+            }
+            DragDropState = 0;
+        }
+
+        private void C_NodeList_ItemDataTemplate_G_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragDropState = 1;
+        }
+
+        private void C_NodeList_ItemDataTemplate_G_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (DragDropState > 0 && DragDropState < 5)
+                DragDropState++;
+            if (DragDropState == 5)
+            {
+                DragDropState = 6;
+                var selectedNode = C_NodeList.SelectedItem as NodeStructure;
+                if (selectedNode == null)
+                    return;
+                DragDrop.DoDragDrop(this, selectedNode, DragDropEffects.Move);
+            }
+        }
+
+        private void C_NodeList_MoveUp_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            var nodeStructure = C_NodeList.SelectedItem as NodeStructure;
+            if (nodeStructure == null)
+                return;
+
+            var index = C_NodeList.SelectedIndex;
+            CurrentNode.Nodes.Remove(nodeStructure);
+            if (index - 1 < 0)
+                CurrentNode.Nodes.Insert(0, nodeStructure);
+            else
+                CurrentNode.Nodes.Insert(index - 1, nodeStructure);
+            //C_NodeList.SelectedIndex = index - 1;
+            RefreshListView();
+        }
+
+        private void C_NodeList_MoveDown_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            var nodeStructure = C_NodeList.SelectedItem as NodeStructure;
+            if (nodeStructure == null)
+                return;
+
+            var index = C_NodeList.SelectedIndex;
+            CurrentNode.Nodes.Remove(nodeStructure);
+            if (index + 1 < CurrentNode.Nodes.Count)
+                CurrentNode.Nodes.Insert(index + 1, nodeStructure);
+            else
+                CurrentNode.Nodes.Add(nodeStructure);
+            //C_NodeList.SelectedIndex = index + 1;
+            RefreshListView();
+        }
+
+        private void C_NodeList_ItemDataTemplate_G_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var reciver = sender as Grid;
+            if (reciver == null)
+                return;
+            var reciverNode = reciver.DataContext as NodeStructure;
+            if (reciverNode == null)
+                return;
+            if (PathNodes.Count == 0)
+                return;
+            CurrentNode.Nodes.Remove(reciverNode);
+            PathNodes.ElementAt(PathNodes.Count - 1).Nodes.Add(reciverNode);
+
         }
     }
 }
