@@ -6,7 +6,7 @@
         MouseDown="Window_MouseDown"
         Height="100" Width="100"
     Background="Transparent" 
-    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    MouseLeftButtonUp="Window_MouseLeftButtonUp"
     Name="C_MainUserControl">
     <UserControl.Resources>
         <PathGeometry x:Key="AnimationPath"

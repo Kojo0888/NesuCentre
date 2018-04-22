@@ -62,6 +62,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Nodes\NodeControls\OsuNode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Nodes\NodeControls\SubNode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,6 +92,9 @@
     </Compile>
     <Compile Include="NodeConfigurations\Structure\NodeDetails.cs" />
     <Compile Include="NodeConfigurations\Structure\NodeSettings\PathDate.cs" />
+    <Compile Include="Nodes\NodeControls\OsuNode.xaml.cs">
+      <DependentUpon>OsuNode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Nodes\SubNodeBase.cs" />
     <Compile Include="Nodes\NodeControls\SubNode.xaml.cs">
       <DependentUpon>SubNode.xaml</DependentUpon>

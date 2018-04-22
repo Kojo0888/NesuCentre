@@ -137,7 +137,7 @@ namespace NesuCentre
             return distance;
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             DefineNodes(1);
         }
