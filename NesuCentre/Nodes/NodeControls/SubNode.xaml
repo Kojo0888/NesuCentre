@@ -52,11 +52,18 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid>
-        <Ellipse Height="100" Width="100" StrokeThickness="14" Fill="#232323" >
+        <Ellipse Height="100" Width="100" StrokeThickness="12" >
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF232323" Offset="0.827"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
             <Ellipse.Stroke>
                 <RadialGradientBrush RadiusY="0.5">
-                    <GradientStop Color="Transparent" Offset="1" />
-                    <GradientStop Color="Aqua" Offset="0.7" />
+                    <GradientStop x:Name="C_MainNode_Gradient_TransparentColor" Color="Transparent" Offset="1" />
+                    <GradientStop Color="#FF0ED3D3" Offset="0.827" />
+                    <GradientStop Color="#73FBFFFF" Offset="0.343"/>
                 </RadialGradientBrush>
             </Ellipse.Stroke>
         </Ellipse>

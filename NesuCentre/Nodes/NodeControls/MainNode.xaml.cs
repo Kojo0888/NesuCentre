@@ -38,6 +38,11 @@ namespace NesuCentre.Nodes
             A_EllipseAnimationHide_DA.From = System.Windows.SystemParameters.PrimaryScreenWidth - 50;
             A_EllipseAnimationHide_DA.To = System.Windows.SystemParameters.PrimaryScreenWidth - 20;
             Canvas.SetTop(this, System.Windows.SystemParameters.PrimaryScreenHeight / 2 - 50);
+
+            //SolidColorBrush brush = new SolidColorBrush(Colors.Aqua);
+            //brush.Opacity = 0.2;
+            //C_MainNode_Ellipse.Stroke = brush;
+            //C_MainNode_Gradient_TransparentColor.Color = new Color() {};
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
