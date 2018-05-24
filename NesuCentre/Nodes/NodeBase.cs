@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NesuCentre.Nodes
 {
-    public interface INode
+    public class NodeBase : UserControl, INode
     {
-        //double StartX { get; set; }
-        //double StartY { get; set; }
-        //double EndX { get; set; }
-        //double EndY { get; set; }
+
     }
 }

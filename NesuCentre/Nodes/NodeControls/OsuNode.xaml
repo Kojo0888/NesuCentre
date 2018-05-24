@@ -1,12 +1,56 @@
-﻿<UserControl x:Class="NesuCentre.Nodes.NodeControls.OsuNode"
+﻿<huju:NodeBase x:Class="NesuCentre.Nodes.NodeControls.OsuNode"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NesuCentre.Nodes.NodeControls"
+             xmlns:huju="clr-namespace:NesuCentre.Nodes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             x:Name="C_OsuNode" Width="500" Height="500" MouseRightButtonDown="C_OsuNode_MouseRightButtonDown">
+    <!--<UserControl.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded" x:Name="T_Pulse">
+            <BeginStoryboard Name="BS_MainStoryboard">
+                <Storyboard Name="S_MainStoryboard">
+                    <DoubleAnimation Name="A_Appear" Storyboard.TargetName="C_OsuNode" 
+                                             Storyboard.TargetProperty="(Canvas.Left)" />
+                    <DoubleAnimation Name="A_AppearW" Storyboard.TargetName="C_Ellipse" 
+                                             Storyboard.TargetProperty="(Width)" />
+                    <DoubleAnimation Name="A_AppearH" Storyboard.TargetName="C_Ellipse" 
+                                             Storyboard.TargetProperty="(Height)"  />
+
+                    <DoubleAnimation Name="A_Pulse"  Storyboard.TargetName="C_OsuNode" 
+                                             Storyboard.TargetProperty="(Canvas.Left)" />
+                    <DoubleAnimation Name="A_Pulse2"  Storyboard.TargetName="C_OsuNode" 
+                                             Storyboard.TargetProperty="(Canvas.Top)" />
+                    <DoubleAnimation Name="A_Pulse3"  Storyboard.TargetName="C_OsuNode" 
+                                             Storyboard.TargetProperty="(Width)" />
+                    <DoubleAnimation Name="A_Pulse4" Storyboard.TargetName="C_OsuNode" 
+                                             Storyboard.TargetProperty="(Height)" />
+                    <DoubleAnimation Name="A_Pulse_E1"  Storyboard.TargetName="C_Ellipse" 
+                                             Storyboard.TargetProperty="(Width)" />
+                    <DoubleAnimation Name="A_Pulse_E2" Storyboard.TargetName="C_Ellipse" 
+                                             Storyboard.TargetProperty="(Height)" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>-->
     <Grid>
-            
+        <Ellipse Name="C_Ellipse" Height="400" Width="400" StrokeThickness="12" Fill="#232323">
+            <Ellipse.Stroke>
+                <RadialGradientBrush RadiusY="0.5">
+                    <GradientStop Color="Transparent" Offset="1" />
+                    <GradientStop Color="Aqua" Offset="0.95" />
+                </RadialGradientBrush>
+            </Ellipse.Stroke>
+        </Ellipse>
+        <Ellipse Name="C_Ellipse_Pulse" Height="430" Width="430" StrokeThickness="12" Fill="#232323" Opacity="0">
+            <Ellipse.Stroke>
+                <RadialGradientBrush RadiusY="0.5">
+                    <GradientStop Color="Transparent" Offset="1" />
+                    <GradientStop Color="Aqua" Offset="0.95" />
+                </RadialGradientBrush>
+            </Ellipse.Stroke>
+        </Ellipse>
+        <!--<Grid Name="C_SubNodes" />-->
+        <Canvas Name="C_NodeContainer_G"/>
     </Grid>
-</UserControl>
+</huju:NodeBase>

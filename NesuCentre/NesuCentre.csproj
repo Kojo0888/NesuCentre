@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="NodeConfigurations\Structure\NodeDetails.cs" />
     <Compile Include="NodeConfigurations\Structure\NodeSettings\PathDate.cs" />
+    <Compile Include="Nodes\NodeBase.cs" />
     <Compile Include="Nodes\NodeControls\OsuNode.xaml.cs">
       <DependentUpon>OsuNode.xaml</DependentUpon>
     </Compile>

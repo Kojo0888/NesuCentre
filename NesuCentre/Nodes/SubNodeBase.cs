@@ -11,9 +11,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace NesuCentre
+namespace NesuCentre.Nodes
 {
-    public class SubNodeBase : UserControl, INode
+    public class SubNodeBase : NodeBase, INode
     {
         public bool Ejecting { get; set; }
         public bool AbortEjecting { get; set; }
@@ -45,6 +45,26 @@ namespace NesuCentre
 
         public BeginStoryboard S_Eject { get; set; }
         public BeginStoryboard S_Hide { get; set; }
+
+        #region enptyRoutedevent
+
+        public static readonly RoutedEvent EmptyRoutedEvent = EventManager.RegisterRoutedEvent("EmptyEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SubNodeBase));
+
+        public event RoutedEventHandler EmptyEvent
+        {
+            add
+            {
+                this.AddHandler(EmptyRoutedEvent, value);
+            }
+
+            remove
+            {
+                this.RemoveHandler(EmptyRoutedEvent, value);
+            }
+        }
+
+        #endregion
+
 
         public SubNodeBase()
         {
@@ -264,7 +284,7 @@ namespace NesuCentre
             var multiplierForLeftMove = Math.Sin(Math.PI / 2 + (Math.PI / 3.95 * indexFromMinusHalfMax));
             var multiplierForTopMove = Math.Cos(Math.PI / 2 + (Math.PI / 3.95 * indexFromMinusHalfMax));
             var radius = 120 + 5 * max / 2;
-            var newSubNode = new SubNodeWindow(Canvas.GetLeft(this),
+            var newSubNode = new SubNode(Canvas.GetLeft(this),
                 Canvas.GetTop(this),
                 Canvas.GetLeft(this) - multiplierForLeftMove * radius,
                 Canvas.GetTop(this) - multiplierForTopMove * radius,

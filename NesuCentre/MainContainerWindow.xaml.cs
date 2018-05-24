@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NesuCentre.Nodes;
+using NesuCentre.Nodes.NodeControls;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NesuCentre.Nodes;
 
 namespace NesuCentre
 {
@@ -20,6 +23,8 @@ namespace NesuCentre
     /// </summary>
     public partial class MainContainerWindow : Window
     {
+        public static MainContainerWindow MainContainer;
+
         private bool _draggingCondition { get; set; } = false;
         private bool _dragging { get; set; } = false;
         private bool _rootNodeShowed { get; set; } = false;//Does not have practical use yet
@@ -38,6 +43,8 @@ namespace NesuCentre
             //Releasing Mouse.Capture
             Mouse.AddPreviewMouseUpOutsideCapturedElementHandler(this, BezierReleaseMouseCapture);
             Mouse.AddPreviewMouseUpHandler(this, BezierReleaseMouseCapture);
+
+            MainContainerWindow.MainContainer = this;
         }
 
         #region HANDLERS
@@ -61,6 +68,11 @@ namespace NesuCentre
                     }
                 }
             }
+        }
+
+        internal void RemoveOsuNode(OsuNode osuNode)
+        {
+            C_Canvas.Children.Remove(osuNode);
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -165,11 +177,18 @@ namespace NesuCentre
 
         private void BezierReleaseMouseCapture(object sender, MouseButtonEventArgs e)
         {
-            _dragging = false;
             _draggingCondition = false;
             Mouse.Capture(this, CaptureMode.None);
             C_BezierSegment1.Point3 = new Point(SystemParameters.PrimaryScreenWidth, C_BezierSegment1.Point3.Y);
             C_BezierSegment2.Point1 = new Point(SystemParameters.PrimaryScreenWidth, C_BezierSegment2.Point1.Y);
+
+            if(Mouse.GetPosition(this).X < SystemParameters.PrimaryScreenWidth * 0.9 && _dragging)
+            {
+                OsuNode osunode = new OsuNode();
+                C_Canvas.Children.Add(osunode);
+            }
+
+            _dragging = false;
         }
     }
 }

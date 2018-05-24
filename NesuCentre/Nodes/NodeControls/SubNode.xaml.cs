@@ -1,4 +1,5 @@
 ﻿using NesuCentre.NodeConfiguration;
+using NesuCentre.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace NesuCentre
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SubNodeWindow : SubNodeBase
+    public partial class SubNode : SubNodeBase
     {
 
         public double CanvasTop
@@ -37,29 +38,14 @@ namespace NesuCentre
             set { Canvas.SetLeft(this, value); }
         }
 
-        public static readonly RoutedEvent EmptyRoutedEvent = EventManager.RegisterRoutedEvent("EmptyEvent", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SubNodeWindow));
-
-        public event RoutedEventHandler EmptyEvent
-        {
-            add
-            {
-                this.AddHandler(EmptyRoutedEvent, value);
-            }
-
-            remove
-            {
-                this.RemoveHandler(EmptyRoutedEvent, value);
-            }
-        }
-
-        public SubNodeWindow()
+        public SubNode()
         {
             InitializeComponent();
             //Canvas.SetLeft(this, System.Windows.SystemParameters.PrimaryScreenWidth - 50);
             //Canvas.SetTop(this, System.Windows.SystemParameters.PrimaryScreenHeight / 2 - 50);
         }
 
-        public SubNodeWindow(double StartX, double StartY, double EndX, double EndY, int stage, NodeStructure configuration) 
+        public SubNode(double StartX, double StartY, double EndX, double EndY, int stage, NodeStructure configuration) 
             : base(StartX, StartY, EndX, EndY, stage, configuration)
         {
             InitializeComponent();

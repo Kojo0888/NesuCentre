@@ -1,8 +1,9 @@
 ﻿<huju:SubNodeBase
-        x:Class="NesuCentre.SubNodeWindow"
+        x:Class="NesuCentre.SubNode"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:huju="clr-namespace:NesuCentre"
+        xmlns:huju="clr-namespace:NesuCentre.Nodes"
+        xmlns:huju2="clr-namespace:NesuCentre.Nodes"
         Height="100" Width="100"
         MouseDown="Window_MouseDown"
         OpacityMask="White" 
@@ -13,7 +14,7 @@
     PreviewMouseRightButtonDown="C_MainUserControl_PreviewMouseRightButtonDown"
     x:Name="C_MainUserControl">
     <UserControl.Triggers>
-        <EventTrigger RoutedEvent="huju:SubNodeWindow.EmptyEvent" x:Name="T_EjectX">
+        <EventTrigger RoutedEvent="Window.Loaded" x:Name="T_EjectX">
             <BeginStoryboard Name="S_Eject">
                 <Storyboard>
                     <DoubleAnimation Name="A_EjectX_DA" From="0" To="100" Duration="0:0:0.2" Storyboard.TargetName="C_MainUserControl" 
@@ -31,7 +32,7 @@
                 </Storyboard>
             </BeginStoryboard>
         </EventTrigger>
-        <EventTrigger RoutedEvent="huju:SubNodeWindow.EmptyEvent" x:Name="T_HideX">
+        <EventTrigger RoutedEvent="huju:SubNodeBase.EmptyEvent" x:Name="T_HideX">
             <BeginStoryboard Name="S_Hide">
                 <Storyboard>
                     <DoubleAnimation Name="A_HideX_DA" From="0" To="100" Duration="0:0:0.2" Storyboard.TargetName="C_MainUserControl" 

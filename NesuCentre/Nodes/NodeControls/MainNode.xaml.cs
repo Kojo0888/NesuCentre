@@ -1,4 +1,5 @@
 ﻿using NesuCentre.NodeConfiguration.Structure;
+using NesuCentre.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NesuCentre
+namespace NesuCentre.Nodes
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainNode : UserControl, INode
+    public partial class MainNode : NodeBase
     {
         public bool Ejecting { get; set; }
         public bool AbortEjecting { get; set; }
@@ -29,8 +30,8 @@ namespace NesuCentre
 
         public MainNode()
         {
-            SubNodeBase.MainParentNode = this;
             InitializeComponent();
+            SubNodeBase.MainParentNode = this;
             Canvas.SetLeft(this, System.Windows.SystemParameters.PrimaryScreenWidth - 20);
             A_EllipseAnimationEject_DA.From = System.Windows.SystemParameters.PrimaryScreenWidth - 20;
             A_EllipseAnimationEject_DA.To = System.Windows.SystemParameters.PrimaryScreenWidth - 50;
@@ -152,10 +153,10 @@ namespace NesuCentre
 
         private void DefineNode(int index, int max)
         {
-            var newSubNode = new SubNodeWindow(Canvas.GetLeft(this), Canvas.GetTop(this), Canvas.GetLeft(this) - 50,
+            var newSubNode = new SubNode(Canvas.GetLeft(this), Canvas.GetTop(this), Canvas.GetLeft(this) - 50,
                 Canvas.GetTop(this) - index * 70, 1, ConfigurationCentre.RootNode);
             SubNodeBase.allNodeList.Add(newSubNode);
-            SubNodeWindow.MainCanvas.Children.Add(newSubNode);
+            SubNode.MainCanvas.Children.Add(newSubNode);
             //newSubNode.S_EjectX.Storyboard.Begin();
             //newSubNode.S_EjectY.Storyboard.Begin();
             //newSubNode.StartEjecting();
