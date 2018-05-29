@@ -42,21 +42,21 @@ namespace NesuCentre.NodeConfiguration.Structure
             {
                 DateTime dt = File.GetLastWriteTime(NODE_CONFIGURATION_FILE_NAME);
                 string newPath = Path.Combine(NODE_CONFIGURATION_BACKUP_FOLDER_NAME,
-                    $"ConfigurationBackup_{dt.ToShortDateString().Replace('/','_')}__{dt.ToLongTimeString().Replace(':','_').Replace(' ','_')}");
+                    $"ConfigurationBackup_{dt.ToShortDateString().Replace('/','_')}__{dt.ToLongTimeString().Replace(':','_').Replace(' ','_')}{CONFIGURATION_EXTENSION}");
 
-                if (File.Exists(newPath + CONFIGURATION_EXTENSION))
+                if (File.Exists(newPath))
                 {
                     int index = 1;
-                    string newPathWidthNumber = newPath + "_" +  index;
+                    string newPathWidthNumber = newPath + "_" +  index + CONFIGURATION_EXTENSION;
                     while (File.Exists(newPathWidthNumber))
                     {
                         newPathWidthNumber = newPath + "_" + (index++);
                     }
 
-                    File.Move(NODE_CONFIGURATION_FILE_NAME, newPathWidthNumber + CONFIGURATION_EXTENSION);
+                    File.Move(NODE_CONFIGURATION_FILE_NAME, newPathWidthNumber);
                 }
 
-                File.Move(NODE_CONFIGURATION_FILE_NAME, newPath + CONFIGURATION_EXTENSION);
+                File.Move(NODE_CONFIGURATION_FILE_NAME, newPath);
             }
 
             ScanAndRemoveBackupsOlderThanWeek();
