@@ -55,7 +55,7 @@
                     </EventTrigger>
                 </Path.Triggers>-->
             </Path>
-            <nesucentre:MainNode x:Name="C_MainControl" Height="100" Width="100" MouseMove="C_MainControl_MouseMove" 
+            <nesucentre:MainNode x:Name="C_MainNode" Height="100" Width="100" MouseMove="C_MainControl_MouseMove" 
                                  MouseLeftButtonDown="C_MainControl_MouseLeftButtonDown" MouseLeftButtonUp="C_MainControl_MouseLeftButtonUp">
             </nesucentre:MainNode>
         </Canvas>

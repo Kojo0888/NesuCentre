@@ -34,14 +34,6 @@
         </EventTrigger>
     </UserControl.Triggers>-->
     <Grid>
-        <Ellipse Name="C_Ellipse" Height="400" Width="400" StrokeThickness="12" Fill="#232323">
-            <Ellipse.Stroke>
-                <RadialGradientBrush RadiusY="0.5">
-                    <GradientStop Color="Transparent" Offset="1" />
-                    <GradientStop Color="Aqua" Offset="0.95" />
-                </RadialGradientBrush>
-            </Ellipse.Stroke>
-        </Ellipse>
         <Ellipse Name="C_Ellipse_Pulse" Height="430" Width="430" StrokeThickness="12" Fill="#232323" Opacity="0">
             <Ellipse.Stroke>
                 <RadialGradientBrush RadiusY="0.5">
@@ -50,6 +42,41 @@
                 </RadialGradientBrush>
             </Ellipse.Stroke>
         </Ellipse>
+        <Grid Name="C_Ellipse" Height="400" Width="400">
+            <Ellipse StrokeThickness="12" Fill="#232323">
+                <Ellipse.Stroke>
+                    <RadialGradientBrush RadiusY="0.5">
+                        <GradientStop Color="Transparent" Offset="1" />
+                        <GradientStop Color="Aqua" Offset="0.95" />
+                    </RadialGradientBrush>
+                </Ellipse.Stroke>
+            </Ellipse>
+            <Grid Width="{Binding ElementName=C_Ellipse,Path=Width}" Height="{Binding ElementName=C_Ellipse,Path=Height}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".25*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".25*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Name="C_TitleSpace" Grid.Row="1" Grid.Column="1" >
+                    <Viewbox Stretch="Uniform" Width="{Binding ElementName=C_TitleSpace,Path=Width}" Height="{Binding ElementName=C_TitleSpace,Path=Height}">
+                        <StackPanel>
+                            <TextBlock FontSize="42" Foreground="LightGray" FontWeight="Bold">
+                                        NesuCentre
+                            </TextBlock>
+                            <TextBlock Name="C_Version" HorizontalAlignment="Center" Text="version not set" FontSize="12" Foreground="LightGray" FontWeight="Bold" />
+                            <TextBlock FontSize="22" Foreground="LightGray" FontWeight="Bold">
+                                    (Node unused for now)
+                            </TextBlock>    
+                        </StackPanel>
+                    </Viewbox>
+                </StackPanel>
+            </Grid>
+        </Grid>
         <!--<Grid Name="C_SubNodes" />-->
         <Canvas Name="C_NodeContainer_G"/>
     </Grid>

@@ -41,6 +41,13 @@ namespace NesuCentre.Nodes.NodeControls
             this.Loaded += BeginStartingAnimationEvent;
             _startingStoryboard.Storyboard.Completed += BeginContinuingAnimationEvent;
             _hidingStoryboard.Storyboard.Completed += DisposeNode;
+
+            C_NodeContainer_G.Width = this.Width * 0.65;
+            C_NodeContainer_G.Height = this.Height * 0.65;
+            //C_NodeContainer_G.Background = Brushes.BlanchedAlmond;
+            C_NodeContainer_G.Opacity = 0.5;
+
+            C_Version.Text = MainContainerWindow.CURRENT_VERISON;
         }
 
         private void BeginStartingAnimationEvent(object sender, EventArgs e)

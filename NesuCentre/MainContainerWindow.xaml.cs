@@ -23,6 +23,8 @@ namespace NesuCentre
     /// </summary>
     public partial class MainContainerWindow : Window
     {
+        public static string CURRENT_VERISON => "v0.0.0.5";
+
         public static MainContainerWindow MainContainer;
 
         private bool _draggingCondition { get; set; } = false;
@@ -68,11 +70,6 @@ namespace NesuCentre
                     }
                 }
             }
-        }
-
-        internal void RemoveOsuNode(OsuNode osuNode)
-        {
-            C_Canvas.Children.Remove(osuNode);
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -147,9 +144,9 @@ namespace NesuCentre
         private void BezierDefineStartCoordinates()
         {
             this.C_BezierSegment1.Point1 = new Point(SystemParameters.PrimaryScreenWidth,
-                SystemParameters.PrimaryScreenHeight / 2 - C_MainControl.Height / 2 + 10);
+                SystemParameters.PrimaryScreenHeight / 2 - C_MainNode.Height / 2 + 10);
             this.C_BezierSegment1.Point2 = new Point(SystemParameters.PrimaryScreenWidth,
-                SystemParameters.PrimaryScreenHeight / 2 - C_MainControl.Height / 2 + 50);
+                SystemParameters.PrimaryScreenHeight / 2 - C_MainNode.Height / 2 + 50);
             this.C_BezierSegment1.Point3 = new Point(SystemParameters.PrimaryScreenWidth,
                 SystemParameters.PrimaryScreenHeight / 2);
 
@@ -158,7 +155,7 @@ namespace NesuCentre
             this.C_BezierSegment2.Point2 = new Point(SystemParameters.PrimaryScreenWidth,
                 SystemParameters.PrimaryScreenHeight / 2 - 10);
             this.C_BezierSegment2.Point3 = new Point(SystemParameters.PrimaryScreenWidth,
-                SystemParameters.PrimaryScreenHeight / 2 + C_MainControl.Height / 2 - 10);
+                SystemParameters.PrimaryScreenHeight / 2 + C_MainNode.Height / 2 - 10);
 
             this.C_CurveStart.StartPoint = this.C_BezierSegment1.Point1;
         }
@@ -183,12 +180,23 @@ namespace NesuCentre
             C_BezierSegment2.Point1 = new Point(SystemParameters.PrimaryScreenWidth, C_BezierSegment2.Point1.Y);
 
             if(Mouse.GetPosition(this).X < SystemParameters.PrimaryScreenWidth * 0.9 && _dragging)
-            {
-                OsuNode osunode = new OsuNode();
-                C_Canvas.Children.Add(osunode);
-            }
+                AddOsuNode();
 
             _dragging = false;
+        }
+
+        private void AddOsuNode()
+        {
+            OsuNode osunode = new OsuNode();
+            C_Canvas.Children.Add(osunode);
+
+            C_MainNode.Visibility = Visibility.Collapsed;
+        }
+
+        internal void RemoveOsuNode(OsuNode osuNode)
+        {
+            C_Canvas.Children.Remove(osuNode);
+            C_MainNode.Visibility = Visibility.Visible;
         }
     }
 }

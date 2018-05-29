@@ -13,6 +13,8 @@ namespace NesuCentre.NodeConfiguration.Structure
         public static string NODE_CONFIGURATION_FILE_NAME = "NodeConfiguration.config";
         public static string NODE_CONFIGURATION_BACKUP_FOLDER_NAME = "NodeConfigurationBackups";
 
+        public static string CONFIGURATION_EXTENSION => "config";
+
         public static NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root"} };
 
         static ConfigurationCentre()
@@ -40,8 +42,21 @@ namespace NesuCentre.NodeConfiguration.Structure
             {
                 DateTime dt = File.GetLastWriteTime(NODE_CONFIGURATION_FILE_NAME);
                 string newPath = Path.Combine(NODE_CONFIGURATION_BACKUP_FOLDER_NAME,
-                    $"ConfigurationBackup_{dt.ToShortDateString().Replace('/','_')}__{dt.ToLongTimeString().Replace(':','_').Replace(' ','_')}.config");
-                File.Move(NODE_CONFIGURATION_FILE_NAME, newPath);
+                    $"ConfigurationBackup_{dt.ToShortDateString().Replace('/','_')}__{dt.ToLongTimeString().Replace(':','_').Replace(' ','_')}");
+
+                if (File.Exists(newPath + CONFIGURATION_EXTENSION))
+                {
+                    int index = 1;
+                    string newPathWidthNumber = newPath + "_" +  index;
+                    while (File.Exists(newPathWidthNumber))
+                    {
+                        newPathWidthNumber = newPath + "_" + (index++);
+                    }
+
+                    File.Move(NODE_CONFIGURATION_FILE_NAME, newPathWidthNumber + CONFIGURATION_EXTENSION);
+                }
+
+                File.Move(NODE_CONFIGURATION_FILE_NAME, newPath + CONFIGURATION_EXTENSION);
             }
 
             ScanAndRemoveBackupsOlderThanWeek();
