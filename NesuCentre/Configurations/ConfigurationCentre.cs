@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NesuCentre.Configurations;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace NesuCentre.NodeConfiguration.Structure
         public static string NODE_CONFIGURATION_BACKUP_FOLDER_NAME = "NodeConfigurationBackups";
 
         public static string CONFIGURATION_EXTENSION => "config";
+
+        public static ConfigurationStructure Configuration = new ConfigurationStructure();//TODO attach new Configuration
 
         public static NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root"} };
 

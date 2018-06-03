@@ -6,7 +6,6 @@
         xmlns:huju2="clr-namespace:NesuCentre.Nodes"
         Height="100" Width="100"
         MouseDown="Window_MouseDown"
-        OpacityMask="White" 
         Background="Transparent" 
     MouseEnter="Window_MouseEnter"
     MouseLeave="Window_MouseLeave"

@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>NesuCentre</RootNamespace>
     <AssemblyName>NesuCentre</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,25 +55,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configurations\ConfigurationStructure.cs" />
+    <Compile Include="Configurations\NodeConfigurationWindow.xaml.cs">
+      <DependentUpon>NodeConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configurations\NodeConfigurations\AdditionalOption.cs" />
+    <Compile Include="Configurations\ConfigurationCentre.cs" />
+    <Compile Include="Configurations\NodeConfigurations\NodeDetails.cs" />
+    <Compile Include="Configurations\NodeConfigurations\NodeSettings\NodeSettingBase.cs" />
+    <Compile Include="Configurations\NodeConfigurations\NodeSettings\NodeSettingNewestOldestFileOrDirectory.cs" />
+    <Compile Include="Configurations\NodeConfigurations\NodeSettings\PathDate.cs" />
+    <Compile Include="Configurations\NodeConfigurations\NodeStructure.cs" />
+    <Compile Include="Configurations\TopPanelConfiguration\TopPanelItem.cs" />
+    <Compile Include="Nodes\INode.cs" />
+    <Compile Include="Nodes\NodeBase.cs" />
+    <Compile Include="Nodes\NodeControls\MainNode.xaml.cs">
+      <DependentUpon>MainNode.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Nodes\NodeControls\OsuNode.xaml.cs">
+      <DependentUpon>OsuNode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes\NodeControls\SubNode.xaml.cs">
+      <DependentUpon>SubNode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes\SubNodeBase.cs" />
+    <Compile Include="TopPanel.xaml.cs">
+      <DependentUpon>TopPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TopPanelContainer.xaml.cs">
+      <DependentUpon>TopPanelContainer.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainContainerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NodeConfigurations\NodeConfigurationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Nodes\NodeControls\OsuNode.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Nodes\NodeControls\SubNode.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Nodes\NodeControls\MainNode.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -81,29 +97,30 @@
     <Compile Include="MainContainerWindow.xaml.cs">
       <DependentUpon>MainContainerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nodes\INode.cs" />
-    <Compile Include="NodeConfigurations\Structure\AdditionalOption.cs" />
-    <Compile Include="NodeConfigurations\Structure\ConfigurationCentre.cs" />
-    <Compile Include="NodeConfigurations\Structure\NodeSettings\NodeSettingBase.cs" />
-    <Compile Include="NodeConfigurations\Structure\NodeSettings\NodeSettingNewestOldestFileOrDirectory.cs" />
-    <Compile Include="NodeConfigurations\Structure\NodeStructure.cs" />
-    <Compile Include="NodeConfigurations\NodeConfigurationWindow.xaml.cs">
-      <DependentUpon>NodeConfigurationWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NodeConfigurations\Structure\NodeDetails.cs" />
-    <Compile Include="NodeConfigurations\Structure\NodeSettings\PathDate.cs" />
-    <Compile Include="Nodes\NodeBase.cs" />
-    <Compile Include="Nodes\NodeControls\OsuNode.xaml.cs">
-      <DependentUpon>OsuNode.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Nodes\SubNodeBase.cs" />
-    <Compile Include="Nodes\NodeControls\SubNode.xaml.cs">
-      <DependentUpon>SubNode.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Nodes\NodeControls\MainNode.xaml.cs">
-      <DependentUpon>MainNode.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Configurations\NodeConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Nodes\NodeControls\MainNode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Nodes\NodeControls\OsuNode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Nodes\NodeControls\SubNode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="TopPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TopPanelContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

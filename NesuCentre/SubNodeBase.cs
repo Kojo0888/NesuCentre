@@ -28,6 +28,9 @@ namespace NesuCentre.Nodes
         public double Multiplayer { get; set; } = 5;
         public double MovementDistance { get; set; } = 50;
 
+        private Task _ejectingTask;
+        private Task _hidingTask;
+
         protected NodeStructure nodeConfig;
         private List<SubNodeBase> nodeList = new List<SubNodeBase>();
 
@@ -81,6 +84,179 @@ namespace NesuCentre.Nodes
             nodeConfig = configuration;
         }
 
+        #region Obsolete methods
+        [Obsolete]
+        public void StartEjecting()
+        {
+            if (Hiding)
+            {
+                AbortHiding = true;
+                AbortEjecting = false;
+            }
+
+            if (!Ejecting)
+            {
+                Ejecting = true;
+                Task.Run(() =>
+                {
+                    Tuple<double, double> distance = new Tuple<double, double>(100, 100);
+                    while (distance.Item1 > 0.1 || distance.Item2 > 0.1)
+                    {
+                        if (CheckEjectingAbort()) return;
+                        Thread.Sleep(23);
+                        //Task.Delay(50);
+                        if (CheckEjectingAbort()) return;
+                        distance = this.Dispatcher.Invoke(() =>
+                        {
+                            return PunchNode(EndX, EndY);
+                        });
+                        if (CheckEjectingAbort()) return;
+                        Debug.WriteLine($"Ejecting {distance} \tStartX:{StartX} EndX:{EndX}");
+                    }
+                    AbortEjecting = false;
+                    Ejecting = false;
+                    _ignoreFirstMouseLeave = false;
+                    Debug.WriteLine($"Ejecting ended");
+                });
+            }
+        }
+
+        [Obsolete]
+        public void StartHiding(bool removeAfter)
+        {
+            if (_ignoreFirstMouseLeave)
+                return;
+
+            if (Ejecting)
+            {
+                AbortEjecting = true;
+                AbortHiding = false;
+            }
+
+            if (!Hiding)
+            {
+                Hiding = true;
+                Task.Run(() =>
+                {
+                    var speed = 20;
+                    Tuple<double, double> distance = new Tuple<double, double>(-100, -100);
+                    while (!((distance.Item1 < 3 && distance.Item1 > -3) && (distance.Item2 < 3 && distance.Item2 > -3)))
+                    //while (!((distance.Item1 < speed && distance.Item1 > -speed) 
+                    //    && (distance.Item2 < speed && distance.Item2 > -speed)))
+                    {
+                        if (CheckHideAbort()) return;
+                        Thread.Sleep(23);
+                        //Task.Delay(50);
+                        if (CheckHideAbort()) return;
+                        distance = this.Dispatcher.Invoke(() =>
+                        {
+                            return PunchNode(StartX, StartY);
+                        });
+                        if (CheckHideAbort()) return;
+                        Debug.WriteLine($"Hiding {distance}");
+                    }
+                    AbortHiding = false;
+                    Hiding = false;
+                    Debug.WriteLine($"Hiding ended");
+                    if (removeAfter)
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            CloseNode(this);
+                        });
+                });
+            }
+        }
+
+        [Obsolete]
+        public void HideAttachedNodes()
+        {
+            foreach (var node in nodeList)
+            {
+                node.StartHiding(true);
+            }
+        }
+
+        [Obsolete]
+        private Tuple<double, double> PunchNode(double destenationX, double destenationY)
+        {
+            double distanceLeft = Canvas.GetLeft(this) - destenationX;
+            if (distanceLeft != 0)
+            {
+                distanceLeft /= Multiplayer;
+                Canvas.SetLeft(this, Canvas.GetLeft(this) - distanceLeft);
+            }
+
+            double distanceTop = Canvas.GetTop(this) - destenationY;
+            if (distanceTop != 0)
+            {
+                distanceTop /= Multiplayer;
+                Canvas.SetTop(this, Canvas.GetTop(this) - distanceTop);
+            }
+
+            return new Tuple<double, double>(distanceLeft, distanceTop);
+        }
+
+        [Obsolete]
+        private Tuple<double, double> MoveNode(double destenationX, double destenationY, double speed = 0)
+        {
+            if (speed == 0)
+                speed = Multiplayer;
+
+            double distanceLeft = Canvas.GetLeft(this) - destenationX;
+            //distanceLeft = (distanceLeft / Math.Abs(distanceLeft));
+            //if (distanceLeft == 0)
+            //    distanceLeft = speed;
+            if (distanceLeft > 0 && distanceLeft > speed)
+                distanceLeft = speed;
+            if (distanceLeft < 0 && distanceLeft < -speed)
+                distanceLeft = -speed;
+
+            if (distanceLeft > 0 || distanceLeft < 0)
+                Canvas.SetLeft(this, Canvas.GetLeft(this) - distanceLeft);
+
+            double distanceTop = Canvas.GetTop(this) - destenationY;
+            //distanceTop = (distanceTop / Math.Abs(distanceTop));
+            //if (distanceTop == 0)
+            //    distanceTop = speed;
+            //distanceTop = distanceTop;
+            if (distanceTop > 0 && distanceTop > speed)
+                distanceTop = speed;
+            if (distanceTop < 0 && distanceTop < -speed)
+                distanceTop = -speed;
+
+            if (distanceTop > 0 || distanceTop < 0)
+                Canvas.SetTop(this, Canvas.GetTop(this) - distanceTop);
+
+            return new Tuple<double, double>(Canvas.GetLeft(this) - destenationX, Canvas.GetTop(this) - destenationY);
+        }
+
+        [Obsolete]
+        private bool CheckEjectingAbort()
+        {
+            if (AbortEjecting)
+            {
+                AbortEjecting = false;
+                Ejecting = false;
+                Debug.WriteLine("Ejecting cancellation detected");
+                return true;
+            }
+            return false;
+        }
+
+        [Obsolete]
+        private bool CheckHideAbort()
+        {
+            if (AbortHiding)
+            {
+                AbortHiding = false;
+                Hiding = false;
+                Debug.WriteLine("Hiding cancellation detected");
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
         public List<SubNodeBase> DefineNodes()
         {
             if (nodeConfig == null)
@@ -103,6 +279,8 @@ namespace NesuCentre.Nodes
         {
             var minusHalfMax = -(max / 2);
             var indexFromMinusHalfMax = minusHalfMax + index;
+            var forthPartOfPI = Math.PI / 4;
+            //var 
             var multiplierForLeftMove = Math.Sin(Math.PI / 2 + (Math.PI / 3.95 * indexFromMinusHalfMax));
             var multiplierForTopMove = Math.Cos(Math.PI / 2 + (Math.PI / 3.95 * indexFromMinusHalfMax));
             var radius = 120 + 5 * max / 2;

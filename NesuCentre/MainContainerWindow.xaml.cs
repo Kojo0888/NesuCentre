@@ -14,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using NesuCentre.Nodes;
 
 namespace NesuCentre
 {
@@ -85,7 +84,7 @@ namespace NesuCentre
                 _draggingCondition = false;
                 _dragging = true;
 
-                //Getting Mouse.Move events out of bounds of Visible controls
+               //Getting Mouse.Move events out of bounds of Visible controls
                 Mouse.Capture(this);
             }
         }
@@ -179,7 +178,7 @@ namespace NesuCentre
             C_BezierSegment1.Point3 = new Point(SystemParameters.PrimaryScreenWidth, C_BezierSegment1.Point3.Y);
             C_BezierSegment2.Point1 = new Point(SystemParameters.PrimaryScreenWidth, C_BezierSegment2.Point1.Y);
 
-            if(Mouse.GetPosition(this).X < SystemParameters.PrimaryScreenWidth * 0.9 && _dragging)
+            if (Mouse.GetPosition(this).X < SystemParameters.PrimaryScreenWidth * 0.9 && _dragging)
                 AddOsuNode();
 
             _dragging = false;

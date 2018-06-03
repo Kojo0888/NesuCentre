@@ -51,60 +51,6 @@ namespace NesuCentre.Nodes
             //if (e.ChangedButton == MouseButton.Left)
             //    this.DragMove();
         }
-
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (Hiding)
-            {
-                AbortEjecting = false;
-                AbortHiding = true;
-            }
-
-            Ejecting = true;
-            Task.Run(() =>
-            {
-                double distance = 10.0d;
-                while (distance > 0.01)
-                {
-                    if (CheckEjectingAbort()) break;
-                    Thread.Sleep(30);
-
-                    if (CheckEjectingAbort()) break;
-                    distance = this.Dispatcher.Invoke(() => { return ShiftCentralNode(100, true); });
-
-                    if (CheckEjectingAbort()) break;
-                }
-                Ejecting = false;
-                AbortEjecting = false;
-            });
-        }
-
-        private void Window_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (Ejecting)
-            {
-                AbortEjecting = true;
-                AbortHiding = false;
-            }
-
-            Hiding = true;
-            Task.Run(() =>
-            {
-                double distance = 10.0d;
-                while (distance > 0.01)
-                {
-                    if (CheckHideAbort()) break;
-                    Thread.Sleep(30);
-
-                    if (CheckHideAbort()) break;
-                    distance = this.Dispatcher.Invoke(() => { return ShiftCentralNode(50, false); });
-
-                    if (CheckHideAbort()) break;
-                }
-                Hiding = false;
-                AbortHiding = false;
-            });
-        }
         
         private bool CheckEjectingAbort()
         {
