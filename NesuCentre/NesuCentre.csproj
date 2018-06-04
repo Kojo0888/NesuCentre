@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,24 +67,24 @@
     <Compile Include="Configurations\NodeConfigurations\NodeSettings\NodeSettingNewestOldestFileOrDirectory.cs" />
     <Compile Include="Configurations\NodeConfigurations\NodeSettings\PathDate.cs" />
     <Compile Include="Configurations\NodeConfigurations\NodeStructure.cs" />
-    <Compile Include="Configurations\TopPanelConfiguration\TopPanelItem.cs" />
-    <Compile Include="Nodes\INode.cs" />
-    <Compile Include="Nodes\NodeBase.cs" />
-    <Compile Include="Nodes\NodeControls\MainNode.xaml.cs">
+    <Compile Include="Configurations\TopPanelConfiguration\TopPanelItemConfiguration.cs" />
+    <Compile Include="Modules\Nodes\INode.cs" />
+    <Compile Include="Modules\Nodes\NodeBase.cs" />
+    <Compile Include="Modules\Nodes\NodeControls\MainNode.xaml.cs">
       <DependentUpon>MainNode.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Nodes\NodeControls\OsuNode.xaml.cs">
+    <Compile Include="Modules\Nodes\NodeControls\OsuNode.xaml.cs">
       <DependentUpon>OsuNode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nodes\NodeControls\SubNode.xaml.cs">
+    <Compile Include="Modules\Nodes\NodeControls\SubNode.xaml.cs">
       <DependentUpon>SubNode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nodes\SubNodeBase.cs" />
-    <Compile Include="TopPanel.xaml.cs">
+    <Compile Include="Modules\Nodes\SubNodeBase.cs" />
+    <Compile Include="Modules\TopPanel\Controls\TopPanel.xaml.cs">
       <DependentUpon>TopPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TopPanelContainer.xaml.cs">
+    <Compile Include="Modules\TopPanel\Controls\TopPanelContainer.xaml.cs">
       <DependentUpon>TopPanelContainer.xaml</DependentUpon>
     </Compile>
     <Page Include="MainContainerWindow.xaml">
@@ -101,28 +102,35 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="Nodes\NodeControls\MainNode.xaml">
+    <Page Include="Modules\Nodes\NodeControls\MainNode.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="Nodes\NodeControls\OsuNode.xaml">
+    <Page Include="Modules\Nodes\NodeControls\OsuNode.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="Nodes\NodeControls\SubNode.xaml">
+    <Page Include="Modules\Nodes\NodeControls\SubNode.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="TopPanel.xaml">
+    <Page Include="Modules\TopPanel\Controls\TopPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TopPanelContainer.xaml">
+    <Page Include="Modules\TopPanel\Controls\TopPanelContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\TopPanel\Controls\TopPanelItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\TopPanel\Controls\TopPanelItem.xaml.cs">
+      <DependentUpon>TopPanelItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

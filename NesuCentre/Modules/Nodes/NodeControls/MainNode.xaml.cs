@@ -105,7 +105,7 @@ namespace NesuCentre.Nodes
         private void DefineNode(int index, int max)
         {
             var newSubNode = new SubNode(Canvas.GetLeft(this), Canvas.GetTop(this), Canvas.GetLeft(this) - 50,
-                Canvas.GetTop(this) - index * 70, 1, ConfigurationCentre.RootNode);
+                Canvas.GetTop(this) - index * 70, 1, ConfigurationCentre.Configuration.RootNode);
             SubNodeBase.allNodeList.Add(newSubNode);
             SubNode.MainCanvas.Children.Add(newSubNode);
             //newSubNode.S_EjectX.Storyboard.Begin();

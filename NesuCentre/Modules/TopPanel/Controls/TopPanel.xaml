@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NesuCentre"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" AllowDrop="True"
+             Drop="UserControl_Drop"
+             d:DesignHeight="450" d:DesignWidth="800"
+             MouseRightButtonUp="UserControl_MouseRightButtonUp"
+             >
     <Grid>
         <Ellipse Name="C_Test"/>
         <Rectangle Name="C_MainPanel" StrokeThickness="6" Fill="#FF232323" >
@@ -16,7 +19,10 @@
                 </LinearGradientBrush>
             </Rectangle.Stroke>
         </Rectangle>
-        <Canvas Name="C_Canvas" Margin="10" Drop="C_Canvas_Drop">
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right"  Margin="{Binding Path=Margin, ElementName=C_Canvas}">
+            <Slider Name="C_Slider" Minimum="0" Maximum="1" Width="50" Interval="1" ValueChanged="Slider_ValueChanged" IsSnapToTickEnabled="True" />
+        </Grid>
+        <Canvas Name="C_Canvas" Margin="10">
             
         </Canvas>
     </Grid>

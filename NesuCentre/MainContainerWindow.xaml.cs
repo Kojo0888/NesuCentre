@@ -1,4 +1,5 @@
-﻿using NesuCentre.Nodes;
+﻿using NesuCentre.NodeConfiguration.Structure;
+using NesuCentre.Nodes;
 using NesuCentre.Nodes.NodeControls;
 using System;
 using System.Collections.Generic;
@@ -196,6 +197,12 @@ namespace NesuCentre
         {
             C_Canvas.Children.Remove(osuNode);
             C_MainNode.Visibility = Visibility.Visible;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (ConfigurationCentre.ConfigurationChanged)
+                ConfigurationCentre.SaveConfiguration();
         }
     }
 }

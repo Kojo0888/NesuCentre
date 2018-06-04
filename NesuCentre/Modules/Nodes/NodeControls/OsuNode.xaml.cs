@@ -262,6 +262,7 @@ namespace NesuCentre.Nodes.NodeControls
 
             //Elipse pulse
             var pulseEase = new CubicEase() { EasingMode = EasingMode.EaseOut };
+            var begniTime = new TimeSpan(0, 0, 0, 0, 550);
 
             DoubleAnimation anim_ep1 = new DoubleAnimation();
             anim_ep1.From = C_Ellipse_Pulse.Width;
@@ -270,7 +271,7 @@ namespace NesuCentre.Nodes.NodeControls
             anim_ep1.EasingFunction = pulseEase;
             anim_ep1.AutoReverse = autoreverse;
             anim_ep1.Duration = duration;
-            anim_ep1.BeginTime = new TimeSpan(0, 0, 0, 0, 500);
+            anim_ep1.BeginTime = begniTime;
             _continuingStoryboard.Storyboard.Children.Add(anim_ep1);
             Storyboard.SetTargetProperty(anim_ep1, new PropertyPath(UserControl.WidthProperty));
             Storyboard.SetTarget(anim_ep1, C_Ellipse_Pulse);
@@ -282,7 +283,7 @@ namespace NesuCentre.Nodes.NodeControls
             anim_ep2.EasingFunction = pulseEase;
             anim_ep2.AutoReverse = autoreverse;
             anim_ep2.Duration = duration;
-            anim_ep2.BeginTime = new TimeSpan(0, 0, 0, 0, 500);
+            anim_ep2.BeginTime = begniTime;
             _continuingStoryboard.Storyboard.Children.Add(anim_ep2);
             Storyboard.SetTargetProperty(anim_ep2, new PropertyPath(UserControl.HeightProperty));
             Storyboard.SetTarget(anim_ep2, C_Ellipse_Pulse);
@@ -294,7 +295,7 @@ namespace NesuCentre.Nodes.NodeControls
             anim_ep3.EasingFunction = pulseEase;
             anim_ep3.AutoReverse = false;
             anim_ep3.Duration = new Duration(new TimeSpan(0, 0, 0, 1));
-            anim_ep3.BeginTime = new TimeSpan(0, 0, 0, 0, 500);
+            anim_ep3.BeginTime = begniTime;
             _continuingStoryboard.Storyboard.Children.Add(anim_ep3);
             Storyboard.SetTargetProperty(anim_ep3, new PropertyPath(UserControl.OpacityProperty));
             Storyboard.SetTarget(anim_ep3, C_Ellipse_Pulse);

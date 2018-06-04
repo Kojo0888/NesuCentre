@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="NesuCentre.Modules.TopPanel.Controls.TopPanelItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NesuCentre.Modules.TopPanel.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100"
+             MouseRightButtonDown="UserControl_MouseRightButtonDown"
+             MouseMove="UserControl_MouseMove"
+             MouseRightButtonUp="UserControl_MouseRightButtonUp"
+             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             >
+    <Grid Height="70" Width="70" >
+        <Ellipse StrokeThickness="8" >
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FF232323" Offset="0.827"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.Stroke>
+                <RadialGradientBrush RadiusY="0.5">
+                    <GradientStop x:Name="C_MainNode_Gradient_TransparentColor" Color="Transparent" Offset="1" />
+                    <GradientStop Color="#FF0ED3D3" Offset="0.827" />
+                    <GradientStop Color="#73FBFFFF" Offset="0.343"/>
+                </RadialGradientBrush>
+            </Ellipse.Stroke>
+        </Ellipse>
+        <Image Name="C_Icon" Width="40" Height="40" >
+
+        </Image>
+
+        <TextBlock Name="C_Name2" Text="{Binding Path=Text, ElementName=C_Name}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12">
+            <TextBlock.Effect>
+                <BlurEffect KernelType="Gaussian" RenderingBias="Performance" Radius="5" />
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock Name="C_Name" HorizontalAlignment="Center" Foreground="WhiteSmoke" VerticalAlignment="Bottom" FontSize="10" FontWeight="Medium">
+            tesasasdas
+        </TextBlock>
+        <Grid Name="C_NodeContainer_G"/>
+    </Grid>
+</UserControl>

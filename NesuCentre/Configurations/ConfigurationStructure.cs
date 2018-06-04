@@ -1,5 +1,6 @@
 ﻿using NesuCentre.Configurations.TopPanelConfiguration;
 using NesuCentre.NodeConfiguration;
+using NesuCentre.NodeConfiguration.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace NesuCentre.Configurations
 {
     public class ConfigurationStructure
     {
-        public List<NodeStructure> nodes = new List<NodeStructure>();
+        public NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root" } };
 
-        public List<TopPanelItem> topItems = new List<TopPanelItem>();
+        public List<TopPanelItemConfiguration> TopPanelItems = new List<TopPanelItemConfiguration>();
 
         public string ConfigurationVestion = "v0.0.0.2";
     }

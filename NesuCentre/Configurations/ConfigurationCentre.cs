@@ -14,11 +14,13 @@ namespace NesuCentre.NodeConfiguration.Structure
         public static string NODE_CONFIGURATION_FILE_NAME = "NodeConfiguration.config";
         public static string NODE_CONFIGURATION_BACKUP_FOLDER_NAME = "NodeConfigurationBackups";
 
-        public static string CONFIGURATION_EXTENSION => "config";
+        public static string CONFIGURATION_EXTENSION => ".config";
+
+        public static bool ConfigurationChanged { get; set; } = false;
 
         public static ConfigurationStructure Configuration = new ConfigurationStructure();//TODO attach new Configuration
 
-        public static NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root"} };
+        //public static NodeStructure RootNode = new NodeStructure() { Details = new NodeDetails() { Name = "Root"} };
 
         static ConfigurationCentre()
         {
@@ -29,10 +31,10 @@ namespace NesuCentre.NodeConfiguration.Structure
         {
             MoveConfigurationToBackupFolder();
 
-            XmlSerializer xmlSerializer = new XmlSerializer(RootNode.GetType());
+            XmlSerializer xmlSerializer = new XmlSerializer(Configuration.GetType());
             using (TextWriter textWriter = new StreamWriter(NODE_CONFIGURATION_FILE_NAME))
             {
-                xmlSerializer.Serialize(textWriter, RootNode);
+                xmlSerializer.Serialize(textWriter, Configuration);
             }
         }
 
@@ -79,10 +81,10 @@ namespace NesuCentre.NodeConfiguration.Structure
             if (!File.Exists(NODE_CONFIGURATION_FILE_NAME))
                 return;
 
-            XmlSerializer xmlSerializer = new XmlSerializer(RootNode.GetType());
+            XmlSerializer xmlSerializer = new XmlSerializer(Configuration.GetType());
             using (TextReader textReader = new StreamReader(NODE_CONFIGURATION_FILE_NAME))
             {
-                RootNode = xmlSerializer.Deserialize(textReader) as NodeStructure;
+                Configuration = xmlSerializer.Deserialize(textReader) as ConfigurationStructure;
             }
         }
     }

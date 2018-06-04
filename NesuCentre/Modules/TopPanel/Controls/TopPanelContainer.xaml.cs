@@ -1,5 +1,8 @@
-﻿using System;
+﻿using NesuCentre.NodeConfiguration.Structure;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,9 +26,30 @@ namespace NesuCentre
     {
         public static double ADDITIONAL_MARGIN_ON_PANEL_SIDES => 300.0d;
 
+        private static bool _lockedPanel;
+
+        public bool LockedPanel 
+        {
+            get
+            {
+                return _lockedPanel;
+            }
+            set
+            {
+                _lockedPanel = value;
+            }
+        }
+
         public TopPanelContainer()
         {
             InitializeComponent();
+            InitializeGraphicalMess();
+            C_MainPanelContainer.ParentContainer = this;
+            DataContext = this;
+        }
+
+        private void InitializeGraphicalMess()
+        {
             //MediaTimeline.DesiredFrameRateProperty.OverrideMetadata(typeof(System.Windows.Media.Animation.Timeline), new FrameworkPropertyMetadata(60));
             var divider = 1.90d;//variable just for calibration
             var leftMargin = SystemParameters.PrimaryScreenWidth / divider;
@@ -42,6 +66,15 @@ namespace NesuCentre
             var jebanywpf = panelAppear.Children[1] as DoubleAnimationUsingKeyFrames;
             var jebanykeyframy = jebanywpf.KeyFrames[0] as EasingDoubleKeyFrame;
             jebanykeyframy.Value = -leftMargin;//-SystemParameters.PrimaryScreenWidth + leftMargin; 
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!_lockedPanel)
+            {
+                var story = this.FindResource("S_PanelHide") as Storyboard;
+                story.Begin(this);
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace NesuCentre
         {
             InitializeComponent();
             ConfigurationCentre.LoadConfiguration();
-            CurrentNode = ConfigurationCentre.RootNode;
+            CurrentNode = ConfigurationCentre.Configuration.RootNode;
             C_NodeList.ItemsSource = CurrentNode.Nodes;
             RefreshListView();
             RefreshPath();

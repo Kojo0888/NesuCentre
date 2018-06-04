@@ -5,14 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NesuCentre"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="760" d:DesignWidth="1092"
+             MouseLeave="UserControl_MouseLeave"
+             >
     <UserControl.Resources>
         <Storyboard x:Key="S_PanelAppear">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="C_MainPanelContainer" >
                 <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="C_MainPanelContainer" >
-                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="-600"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-600"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="C_MainPanelContainer" >
                 <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="250"/>
@@ -34,12 +36,9 @@
         <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
             <BeginStoryboard Storyboard="{StaticResource S_PanelAppear}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
-            <BeginStoryboard Storyboard="{StaticResource S_PanelHide}"/>
-        </EventTrigger>
     </UserControl.Triggers>
     <Grid>
-        <local:TopPanel x:Name="C_MainPanelContainer" Height="280" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="400,-296,-402,0">
+        <local:TopPanel x:Name="C_MainPanelContainer" Height="290" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="400,-296,-402,0">
             <local:TopPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -50,5 +49,6 @@
             </local:TopPanel.RenderTransform>
 
         </local:TopPanel>
+
     </Grid>
 </UserControl>
