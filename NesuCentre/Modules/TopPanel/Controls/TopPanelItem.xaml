@@ -31,12 +31,17 @@
 
         </Image>
 
-        <TextBlock Name="C_Name2" Text="{Binding Path=Text, ElementName=C_Name}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12">
+        <TextBlock Name="C_Name2" Text="{Binding Path=Text, ElementName=C_Name}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="11" TextWrapping="Wrap">
             <TextBlock.Effect>
                 <BlurEffect KernelType="Gaussian" RenderingBias="Performance" Radius="5" />
             </TextBlock.Effect>
         </TextBlock>
-        <TextBlock Name="C_Name" HorizontalAlignment="Center" Foreground="WhiteSmoke" VerticalAlignment="Bottom" FontSize="10" FontWeight="Medium">
+        <TextBlock Name="C_Name3" Text="{Binding Path=Text, ElementName=C_Name}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="11" TextWrapping="Wrap">
+            <TextBlock.Effect>
+                <BlurEffect KernelType="Gaussian" RenderingBias="Performance" Radius="5" />
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock Name="C_Name" HorizontalAlignment="Center" Foreground="WhiteSmoke" VerticalAlignment="Bottom" FontSize="10" FontWeight="Medium"  TextWrapping="Wrap">
             tesasasdas
         </TextBlock>
         <Grid Name="C_NodeContainer_G"/>
