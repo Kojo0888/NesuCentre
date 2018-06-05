@@ -25,7 +25,9 @@ namespace NesuCentre.Modules.TopPanel.Controls
     /// </summary>
     public partial class TopPanelItem : UserControl
     {
-        private TopPanelItemConfiguration _configuration;
+        public TopPanelItemConfiguration Configuration;
+
+        private TopPanel _parentPanel;
 
         private System.Windows.Point _draggingPointOnItem;
         private bool _dragging { get; set; }
@@ -35,16 +37,18 @@ namespace NesuCentre.Modules.TopPanel.Controls
         //    InitializeComponent();
         //}
 
-        public TopPanelItem(TopPanelItemConfiguration config)
+        public TopPanelItem(TopPanelItemConfiguration config, TopPanel parent)
         {
             InitializeComponent();
-            _configuration = config;
+            Configuration = config;
             C_Name.Text = System.IO.Path.GetFileNameWithoutExtension(config.Path);
             System.Drawing.Icon extractedIcon = System.Drawing.Icon.ExtractAssociatedIcon(config.Path);
             C_Icon.Source = Convert(extractedIcon.ToBitmap());
 
             Canvas.SetLeft(this, config.X);
             Canvas.SetTop(this, config.Y);
+
+            _parentPanel = parent;
 
             Mouse.AddPreviewMouseUpOutsideCapturedElementHandler(this, ReleaseMouseCapture);
             Mouse.AddPreviewMouseUpHandler(this, ReleaseMouseCapture);
@@ -53,7 +57,11 @@ namespace NesuCentre.Modules.TopPanel.Controls
         private void ReleaseMouseCapture(object sender, MouseButtonEventArgs e)
         {
             Mouse.Capture(this, CaptureMode.None);
-
+            _parentPanel.StartTrashCanHideAnimation();
+            if (_parentPanel.IsMouseOverTrashCan())
+            {
+                _parentPanel.RemoveTopPanelItem(this);
+            }
             _dragging = false;
         }
 
@@ -74,7 +82,8 @@ namespace NesuCentre.Modules.TopPanel.Controls
             if (this.IsMouseOver)
             {
                 _draggingPointOnItem = Mouse.GetPosition(this);
-                Mouse.Capture(this);
+                Mouse.Capture(this, CaptureMode.Element);
+                
                 _dragging = true;
             }
         }
@@ -86,7 +95,7 @@ namespace NesuCentre.Modules.TopPanel.Controls
 
         private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(this._configuration.Path);
+            Process.Start(this.Configuration.Path);
         }
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
@@ -112,12 +121,19 @@ namespace NesuCentre.Modules.TopPanel.Controls
             else if (Y > parent.ActualHeight - this.ActualHeight)
                 Y = parent.ActualHeight - this.ActualHeight;
 
-            this._configuration.X = X;
-            this._configuration.Y = Y;
+            this.Configuration.X = X;
+            this.Configuration.Y = Y;
             Canvas.SetLeft(this, X);
             Canvas.SetTop(this, Y);
 
+            _parentPanel.StartTrashCanAppearAnimation();
+
             ConfigurationCentre.ConfigurationChanged = true;
+        }
+
+        private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            //Debug.WriteLine("PreveiwMouseMove" + new Random().Next());
         }
     }
 }

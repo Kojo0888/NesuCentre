@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:NesuCentre.Modules.TopPanel.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100"
-             MouseRightButtonDown="UserControl_MouseRightButtonDown"
-             MouseMove="UserControl_MouseMove"
-             MouseRightButtonUp="UserControl_MouseRightButtonUp"
-             MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             PreviewMouseRightButtonDown="UserControl_MouseRightButtonDown"
+             PreviewMouseMove="UserControl_MouseMove"
+             PreviewMouseRightButtonUp="UserControl_MouseRightButtonUp"
+             PreviewMouseLeftButtonUp="UserControl_MouseLeftButtonUp"
              >
     <Grid Height="70" Width="70" >
         <Ellipse StrokeThickness="8" >

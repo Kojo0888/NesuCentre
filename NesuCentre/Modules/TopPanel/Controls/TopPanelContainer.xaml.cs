@@ -28,6 +28,8 @@ namespace NesuCentre
 
         private static bool _lockedPanel;
 
+        private static bool _appearedPanel;
+
         public bool LockedPanel 
         {
             get
@@ -74,6 +76,41 @@ namespace NesuCentre
             {
                 var story = this.FindResource("S_PanelHide") as Storyboard;
                 story.Begin(this);
+                _appearedPanel = false;
+            }
+        }
+
+        private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            var mouse = Mouse.PrimaryDevice;
+            var args = new MouseEventArgs(mouse, 0);
+            args.RoutedEvent = Mouse.MouseMoveEvent;
+            RaiseEvent(args);
+        }
+
+        private void UserControl_PreviewDrop(object sender, DragEventArgs e)
+        {
+            //Storyboard story = this.FindResource("S_PanelAppear") as Storyboard;
+            //story?.Begin(this);
+        }
+
+        private void UserControl_DragOver(object sender, DragEventArgs e)
+        {
+            if (!_appearedPanel)
+            {
+                _appearedPanel = true;
+                Storyboard story = this.FindResource("S_PanelAppear") as Storyboard;
+                story?.Begin(this);
+            }
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!_appearedPanel)
+            {
+                _appearedPanel = true;
+                Storyboard story = this.FindResource("S_PanelAppear") as Storyboard;
+                story?.Begin(this);
             }
         }
     }
