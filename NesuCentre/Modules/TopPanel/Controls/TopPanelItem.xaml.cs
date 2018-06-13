@@ -1,4 +1,5 @@
 ﻿using NesuCentre.Configurations.TopPanelConfiguration;
+using NesuCentre.Helpers;
 using NesuCentre.NodeConfiguration.Structure;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -37,13 +39,13 @@ namespace NesuCentre.Modules.TopPanel.Controls
         //    InitializeComponent();
         //}
 
+
         public TopPanelItem(TopPanelItemConfiguration config, TopPanel parent)
         {
             InitializeComponent();
             Configuration = config;
             C_Name.Text = System.IO.Path.GetFileNameWithoutExtension(config.Path);
-            System.Drawing.Icon extractedIcon = System.Drawing.Icon.ExtractAssociatedIcon(config.Path);
-            C_Icon.Source = Convert(extractedIcon.ToBitmap());
+            SetIcon();
 
             Canvas.SetLeft(this, config.X);
             Canvas.SetTop(this, config.Y);
@@ -52,7 +54,33 @@ namespace NesuCentre.Modules.TopPanel.Controls
 
             Mouse.AddPreviewMouseUpOutsideCapturedElementHandler(this, ReleaseMouseCapture);
             Mouse.AddPreviewMouseUpHandler(this, ReleaseMouseCapture);
+
+            InitializeAnimations();
         }
+
+        public void SetIcon()
+        {
+            System.Drawing.Icon extractedIcon = null;
+
+            try
+            {
+                extractedIcon = System.Drawing.Icon.ExtractAssociatedIcon(Configuration.Path);
+                C_Icon.Source = Convert(extractedIcon.ToBitmap());
+            }
+            catch (Exception ex)
+            {
+                string path = "..\\..\\..\\Images\\File-Explorer-icon.png";
+                BitmapImage logo = new BitmapImage(new Uri(path, UriKind.Relative));
+                C_Icon.Source = logo;
+                return;
+            }
+
+        }
+
+        public void InitializeAnimations()
+        {
+           
+        } 
 
         private void ReleaseMouseCapture(object sender, MouseButtonEventArgs e)
         {
@@ -134,6 +162,32 @@ namespace NesuCentre.Modules.TopPanel.Controls
         private void UserControl_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             //Debug.WriteLine("PreveiwMouseMove" + new Random().Next());
+        }
+
+        private void C_MainGrid_MouseEnter(object sender, MouseEventArgs e)
+        {
+            AnimationHelper.StopResourceAnimation(this, "S_MouseLeave");
+            AnimationHelper.StartResourceAnimation(this, "S_MouseEnter");
+        }
+
+        private void C_MainGrid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            AnimationHelper.StopResourceAnimation(this, "S_MouseEnter");
+            AnimationHelper.StartResourceAnimation(this, "S_MouseLeave");
+            AnimationHelper.StartResourceAnimation(this, "S_MouseClickRelease");
+            AnimationHelper.StopResourceAnimation(this, "S_MouseClick");
+        }
+
+        private void C_MainGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AnimationHelper.StopResourceAnimation(this, "S_MouseClickRelease");
+            AnimationHelper.StartResourceAnimation(this, "S_MouseClick");
+        }
+
+        private void C_MainGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            AnimationHelper.StopResourceAnimation(this, "S_MouseClick");
+            AnimationHelper.StartResourceAnimation(this, "S_MouseClickRelease");
         }
     }
 }

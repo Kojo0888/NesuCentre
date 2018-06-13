@@ -68,6 +68,7 @@
     <Compile Include="Configurations\NodeConfigurations\NodeSettings\PathDate.cs" />
     <Compile Include="Configurations\NodeConfigurations\NodeStructure.cs" />
     <Compile Include="Configurations\TopPanelConfiguration\TopPanelItemConfiguration.cs" />
+    <Compile Include="Helpers\AnimationHelper.cs" />
     <Compile Include="Modules\Nodes\INode.cs" />
     <Compile Include="Modules\Nodes\NodeBase.cs" />
     <Compile Include="Modules\Nodes\NodeControls\MainNode.xaml.cs">
@@ -158,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\GarbageCan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\File-Explorer-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
