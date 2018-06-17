@@ -10,8 +10,7 @@
              PreviewMouseMove="UserControl_PreviewMouseMove"
              PreviewDrop="UserControl_PreviewDrop"
              DragOver="UserControl_DragOver"
-             MouseEnter="UserControl_MouseEnter"
-             >
+             MouseEnter="UserControl_MouseEnter">
     <UserControl.Resources>
         <Storyboard x:Key="S_PanelAppear">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="C_MainPanelContainer" >
@@ -36,8 +35,8 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <Grid>
-        <local:TopPanel x:Name="C_MainPanelContainer" Height="290" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="400,-296,-402,0">
+    <Grid x:Name="C_MainGrid" RenderTransformOrigin="0.5,0.5">
+        <local:TopPanel x:Name="C_MainPanelContainer" Height="290" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <local:TopPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -48,6 +47,13 @@
             </local:TopPanel.RenderTransform>
 
         </local:TopPanel>
-
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
     </Grid>
 </UserControl>

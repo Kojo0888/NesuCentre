@@ -26,6 +26,8 @@ namespace NesuCentre
     {
         public static double ADDITIONAL_MARGIN_ON_PANEL_SIDES => 300.0d;
 
+        public static double TILT_STRENGTH => 0.001d;
+
         private static bool _lockedPanel;
 
         private static bool _appearedPanel;
@@ -57,7 +59,7 @@ namespace NesuCentre
             var leftMargin = SystemParameters.PrimaryScreenWidth / divider;
             var borderPanelMargin = ADDITIONAL_MARGIN_ON_PANEL_SIDES;
             //Blend design automatically sets MArgins, instead of Transform matrix... it works enough = don't touch it :)
-            C_MainPanelContainer.Margin = new Thickness(leftMargin - borderPanelMargin, -C_MainPanelContainer.Height, -leftMargin, 0);
+            C_MainPanelContainer.Margin = new Thickness(leftMargin - borderPanelMargin, -C_MainPanelContainer.Height, -leftMargin -20, 0);//-20 tilt additional panel space, works enough. for this change it is necessary to rebuild whole animation. I shouldn't use designer at first place...
             C_MainPanelContainer.Width = SystemParameters.PrimaryScreenWidth + borderPanelMargin * 2;
 
             var defaultCanvasMargin = C_MainPanelContainer.C_Canvas.Margin.Bottom;//Assume that all are the same
@@ -86,6 +88,27 @@ namespace NesuCentre
             var args = new MouseEventArgs(mouse, 0);
             args.RoutedEvent = Mouse.MouseMoveEvent;
             RaiseEvent(args);
+
+            TiltTopPanel();
+        }
+
+        private void TiltTopPanel()
+        {
+            if (_appearedPanel)
+            {
+                double width = SystemParameters.PrimaryScreenWidth;
+                double mouseX = Mouse.GetPosition(this).X;
+                double angleValue = (mouseX - width / 2) * TILT_STRENGTH;
+
+                var trans = C_MainGrid.RenderTransform as TransformGroup;
+                var rotateTransform = trans.Children.OfType<RotateTransform>()?.FirstOrDefault();
+                if (rotateTransform != null)
+                {
+                    trans.Children.Remove(rotateTransform);
+                    rotateTransform = new RotateTransform(angleValue);
+                    trans.Children.Add(rotateTransform);
+                }
+            }
         }
 
         private void UserControl_PreviewDrop(object sender, DragEventArgs e)
@@ -98,8 +121,9 @@ namespace NesuCentre
         {
             if (!_appearedPanel)
             {
-                _appearedPanel = true;
+                
                 Storyboard story = this.FindResource("S_PanelAppear") as Storyboard;
+                story.Completed += (x,s) => { _appearedPanel = true; };
                 story?.Begin(this);
             }
         }
@@ -108,8 +132,8 @@ namespace NesuCentre
         {
             if (!_appearedPanel)
             {
-                _appearedPanel = true;
                 Storyboard story = this.FindResource("S_PanelAppear") as Storyboard;
+                story.Completed += (x, s) => { _appearedPanel = true; };
                 story?.Begin(this);
             }
         }
