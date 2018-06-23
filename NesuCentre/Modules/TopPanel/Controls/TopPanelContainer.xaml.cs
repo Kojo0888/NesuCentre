@@ -26,7 +26,9 @@ namespace NesuCentre
     {
         public static double ADDITIONAL_MARGIN_ON_PANEL_SIDES => 300.0d;
 
-        public static double TILT_STRENGTH => 0.001d;
+        public static double TILT_ROTATE_STRENGTH => 0.0015d;
+
+        public static double TILT_SLIDE_STRENGTH => 0.020d;
 
         private static bool _lockedPanel;
 
@@ -98,16 +100,34 @@ namespace NesuCentre
             {
                 double width = SystemParameters.PrimaryScreenWidth;
                 double mouseX = Mouse.GetPosition(this).X;
-                double angleValue = (mouseX - width / 2) * TILT_STRENGTH;
+                double angleValue = (mouseX - width / 2);
 
-                var trans = C_MainGrid.RenderTransform as TransformGroup;
-                var rotateTransform = trans.Children.OfType<RotateTransform>()?.FirstOrDefault();
-                if (rotateTransform != null)
-                {
-                    trans.Children.Remove(rotateTransform);
-                    rotateTransform = new RotateTransform(angleValue);
-                    trans.Children.Add(rotateTransform);
-                }
+                RotateTopPanel(angleValue * TILT_ROTATE_STRENGTH);
+                SlideTopPanel(angleValue * TILT_SLIDE_STRENGTH);
+            }
+        }
+
+        private void RotateTopPanel(double value)
+        {
+            var trans = C_MainGrid.RenderTransform as TransformGroup;
+            var rotateTransform = trans.Children.OfType<RotateTransform>()?.FirstOrDefault();
+            if (rotateTransform != null)
+            {
+                trans.Children.Remove(rotateTransform);
+                rotateTransform = new RotateTransform(value);
+                trans.Children.Add(rotateTransform);
+            }
+        }
+
+        private void SlideTopPanel(double value)
+        {
+            var trans = C_MainGrid.RenderTransform as TransformGroup;
+            var translateTransform = trans.Children.OfType<TranslateTransform>()?.FirstOrDefault();
+            if (translateTransform != null)
+            {
+                trans.Children.Remove(translateTransform);
+                translateTransform = new TranslateTransform(value * TILT_SLIDE_STRENGTH, 0);
+                trans.Children.Add(translateTransform);
             }
         }
 
